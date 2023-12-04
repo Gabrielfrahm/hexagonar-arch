@@ -1,0 +1,27 @@
+{
+  "version": "5",
+  "dialect": "sqlite",
+  "entries": [
+    {
+      "idx": 0,
+      "version": "5",
+      "when": 1701732402963,
+      "tag": "0000_rare_lady_ursula",
+      "breakpoints": true
+    },
+    {
+      "idx": 1,
+      "version": "5",
+      "when": 1701733561685,
+      "tag": "0001_organic_nighthawk",
+      "breakpoints": true
+    },
+    {
+      "idx": 2,
+      "version": "5",
+      "when": 1701733768072,
+      "tag": "0002_uneven_logan",
+      "breakpoints": true
+    }
+  ]
+}
