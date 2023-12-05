@@ -10,11 +10,14 @@ export class PersistenceBook extends BookRepositoryPort {
   }
 
   async create(entity: Book): Promise<Book> {
-    await this.drizzleConnection.db.insert(books).values({
-      name: entity.name,
-      author: entity.author,
-      genre: entity.genre
-    });
+    await this.drizzleConnection.db.transaction(async (tx) => {
+      await tx.insert(books).values({
+        name: entity.name,
+        author: entity.author,
+        genre: entity.genre
+      }).prepare().execute();
+    })
+
     return entity;
   }
 

@@ -1,6 +1,7 @@
 
 import { randomUUID } from 'crypto';
 import { sqliteTable, text } from 'drizzle-orm/sqlite-core';
+import { createInsertSchema } from 'drizzle-zod';
 
 type bookId = string;
 
@@ -10,3 +11,5 @@ export const books = sqliteTable('books', {
   genre: text('genre').notNull(),
   author: text('author').notNull()
 });
+
+export const insertBook = createInsertSchema(books)

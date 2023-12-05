@@ -9,7 +9,7 @@ import { SaveBookService } from "./application/services/book/save-book.service";
 import { SaveBookUseCase } from "./domain/book/use-cases/save-book.use-case";
 
 
-const connection = new DrizzleConnection();
+const connection = DrizzleConnection.getInstance();
 const bookPersistence = new PersistenceBook(connection);
 const saveBookUseCase = new SaveBookUseCase();
 const saveBookService = new SaveBookService(saveBookUseCase, bookPersistence);
@@ -17,8 +17,8 @@ const saveBookController = new SaveBookController(saveBookService);
 const expressAdapter = new ExpressAdapter();
 
 expressAdapter.register("get", '/' ,async (req, res) => {
-  console.log(await connection.db.query.books.findMany())
-  return res.json('test')
+  const result = await connection.db.query.books.findMany();
+  return res.json(result)
 });
 
 configureBookRoutes(expressAdapter, saveBookController);
