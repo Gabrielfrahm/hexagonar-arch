@@ -2,9 +2,7 @@ import { Request, Response } from "express";
 import { SaveBookService } from "../../../../../../application/services/book/save-book.service";
 
 export class SaveBookController {
-  constructor(public readonly saveBookService: SaveBookService){
-
-  }
+  constructor(public readonly saveBookService: SaveBookService){}
 
   async save(request: Request, response: Response){
     const body = request.body;
