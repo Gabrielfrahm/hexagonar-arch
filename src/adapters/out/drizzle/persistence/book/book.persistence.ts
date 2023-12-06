@@ -1,7 +1,8 @@
 import { Book } from "../../../../../domain/book/entities/book";
 import { BookRepositoryPort } from "../../../../../ports/out/book/book-repository.port";
-import  {books} from '../../schemas/book'
-import { DrizzleConnection } from '../../connection';
+import  {books} from '../../../../../infra/orm/drizzle/schemas/book'
+import { DrizzleConnection } from "../../../../../infra/orm/drizzle/connection";
+
 
 export class PersistenceBook extends BookRepositoryPort {
 

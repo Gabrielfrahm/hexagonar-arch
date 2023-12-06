@@ -5,10 +5,10 @@
   "license": "MIT",
   "scripts": {
     "start": "npx nodemon src/index.ts",
-    "generate": "npx drizzle-kit generate:sqlite --config=src/adapters/out/drizzle/drizzle.config.ts",
-    "migrate:run": "npx drizzle-kit push:sqlite --config=src/adapters/out/drizzle/drizzle.config.ts",
-    "migrate:rollback": "drizzle-kit drop --config=src/adapters/out/drizzle/drizzle.config.ts",
-    "studio": "npx drizzle-kit studio --config=src/adapters/out/drizzle/drizzle.config.ts"
+    "generate": "npx drizzle-kit generate:sqlite --config=src/infra/orm/drizzle/drizzle.config.ts",
+    "migrate:run": "npx drizzle-kit push:sqlite --config=src/infra/orm/drizzle/drizzle.config.ts",
+    "migrate:rollback": "drizzle-kit drop --config=src/infra/orm/drizzle/drizzle.config.ts",
+    "studio": "npx drizzle-kit studio --config=src/infra/orm/drizzle/drizzle.config.ts"
   },
   "dependencies": {
     "@libsql/client": "^0.4.0-pre.5",
