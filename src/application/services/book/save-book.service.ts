@@ -7,9 +7,7 @@ export class SaveBookService {
   constructor(
     private readonly saveBookUseCase: SaveBookUseCase,
     private readonly bookRepository: BookRepositoryPort,
-  ){
-
-  }
+  ){}
 
   async saveBook(command: createCommand): Promise<Book> {
 

@@ -5,6 +5,7 @@ export type BookProps  = {
   name: string;
   genre: string;
   author: string;
+  created_at?: Date;
 }
 
 export type BookPropsUpdate = {
@@ -18,12 +19,14 @@ export class Book {
   public name: string;
   public genre: string;
   public author: string;
+  public created_at: Date;
 
   constructor(props: BookProps){
     this.id = props.id || randomUUID()
     this.name = props.name;
     this.genre= props.genre;
     this.author = props.author;
+    this.created_at = props.created_at || new Date();
   }
 
   update(props: Partial<BookPropsUpdate>){

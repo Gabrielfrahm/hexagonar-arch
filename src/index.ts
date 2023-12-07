@@ -1,5 +1,5 @@
 
-import { SaveBookController } from "./adapters/in/http/express/controllers/book/save-book.controller";
+import { SaveBookController } from "./adapters/in/http/controllers/book/save-book.controller";
 import ExpressAdapter from "./adapters/in/http/express/express.adapter";
 import { configureBookRoutes } from "./adapters/in/http/express/routes/book.routes";
 

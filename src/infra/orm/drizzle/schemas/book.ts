@@ -1,6 +1,6 @@
 
 import { sql } from 'drizzle-orm';
-import { sqliteTable, text, SQLiteTimestamp, } from 'drizzle-orm/sqlite-core';
+import { sqliteTable, text, } from 'drizzle-orm/sqlite-core';
 import { createInsertSchema } from 'drizzle-zod';
 
 type bookId = string;
@@ -13,4 +13,5 @@ export const books = sqliteTable('books', {
   created_at: text("created_at").default(sql`CURRENT_TIMESTAMP`)
 });
 
-export const insertBook = createInsertSchema(books)
+export const insertBook = createInsertSchema(books);
+export type bookModel = typeof books.$inferSelect;

@@ -3,6 +3,7 @@ import { Connection } from "../connection.contract";
 import { Repository } from "../repository.interface";
 
 export abstract class BookRepositoryPort implements Repository<Book> {
-  constructor(private readonly connection: Connection){}
+  constructor(private readonly _connection: Connection){}
   abstract create(entity: Book): Promise<Book>;
+  abstract findAll(): Promise<Book[]>
 }
