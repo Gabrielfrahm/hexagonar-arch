@@ -2,6 +2,7 @@ import { Book } from "../../../domain/book/entities/book";
 import { SaveBookUseCase } from "../../../domain/book/use-cases/save-book.use-case";
 import { createCommand } from "../../../ports/in/book/use-case/save-book.use-case.port";
 import { BookRepositoryPort } from "../../../ports/out/book/book-repository.port";
+import { Either } from "../../../shared/either";
 
 export class SaveBookService {
   constructor(
@@ -9,10 +10,14 @@ export class SaveBookService {
     private readonly bookRepository: BookRepositoryPort,
   ){}
 
-  async saveBook(command: createCommand): Promise<Book> {
+  async saveBook(command: createCommand): Promise<Either<Error,Book>> {
 
-    const book = await this.saveBookUseCase.execute(command);
+    const result = await this.saveBookUseCase.execute(command);
 
-    return await this.bookRepository.create(book);
+    if(result.isLeft()){
+      return result;
+    }
+
+    return await this.bookRepository.create(result.value);
   }
 }

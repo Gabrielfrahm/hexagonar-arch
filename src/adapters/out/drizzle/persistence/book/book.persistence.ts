@@ -3,7 +3,8 @@ import { BookRepositoryPort, SearchBooksParams } from "../../../../../ports/out/
 import  {books} from '../../../../../infra/orm/drizzle/schemas/book'
 import { DrizzleConnection } from "../../../../../infra/orm/drizzle/connection";
 import { BookMapper } from "./book.mapper";
-import { and, asc, desc, eq, like } from "drizzle-orm";
+import { and, desc, like } from "drizzle-orm";
+import { Either, right } from "../../../../../shared/either";
 
 
 export class PersistenceBook extends BookRepositoryPort {
@@ -13,7 +14,7 @@ export class PersistenceBook extends BookRepositoryPort {
     super(drizzleConnection);
   }
 
-  async create(entity: Book): Promise<Book> {
+  async create(entity: Book): Promise<Either<Error,Book>> {
     await this.drizzleConnection.db.transaction(async (tx) => {
       await tx.insert(books).values({
         id: entity.id,
@@ -23,10 +24,10 @@ export class PersistenceBook extends BookRepositoryPort {
       }).prepare().execute();
     })
 
-    return entity;
+    return right(entity);
   }
 
-  async findAll(params?: SearchBooksParams): Promise<Book[] | []> {
+  async findAll(params?: SearchBooksParams): Promise<Either<any,Book[] | []>> {
     const offset = ((params?.page ||  1) - 1)  * (params?.per_page ?? 10);
     const limit = params?.per_page || 10;
     const booksModel = await this.drizzleConnection.db.select()
@@ -42,7 +43,7 @@ export class PersistenceBook extends BookRepositoryPort {
       .orderBy(desc(books.created_at)).prepare().execute();
 
     if(booksModel){
-      return booksModel.map((bookModel) => BookMapper.toEntity(bookModel));
+      return right(booksModel.map((bookModel) => BookMapper.toEntity(bookModel)));
     }
   }
 }

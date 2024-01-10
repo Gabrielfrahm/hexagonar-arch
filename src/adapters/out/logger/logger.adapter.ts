@@ -2,20 +2,20 @@
 
 import pino  from "pino";
 import { LoggerPort } from "../../../ports/out/logger/logger.interface";
-import * as apm from 'elastic-apm-node';
-apm.start({
-  // Configurações do APM
-  serviceName: 'loggers',
-  serverUrl: 'http://localhost:8200',
-  // Outras configurações necessárias
-  logger: pino({ level: 'info' }),
-  secretToken: '',
-  opentelemetryBridgeEnabled: true,
-  environment: 'development',
-  logLevel: 'info'
-});
-apm.isStarted()
-apm.getServiceName()
+// import * as apm from 'elastic-apm-node';
+// apm.start({
+//   // Configurações do APM
+//   serviceName: 'loggers',
+//   serverUrl: 'http://localhost:8200',
+//   // Outras configurações necessárias
+//   logger: pino({ level: 'info' }),
+//   secretToken: '',
+//   opentelemetryBridgeEnabled: true,
+//   environment: 'development',
+//   logLevel: 'info'
+// });
+// apm.isStarted()
+// apm.getServiceName()
 
 export class PinoElasticsearchLoggerAdapter implements LoggerPort {
 
