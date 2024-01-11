@@ -1,7 +1,8 @@
 import { Book } from "../../../domain/book/entities/book";
 import { SaveBookUseCase } from "../../../domain/book/use-cases/save-book.use-case";
 import { createCommand } from "../../../ports/in/book/use-case/save-book.use-case.port";
-import { BookRepositoryPort } from "../../../ports/out/book/book-repository.port";
+import { BookRepositoryPort } from "../../../ports/out/persistence/book/book-repository.port";
+
 import { Either } from "../../../shared/either";
 
 export class SaveBookService {

@@ -5,7 +5,7 @@ import { SaveUserUseCase } from '../../../../domain/user/use-cases/save-user.use
 import { PersistenceUser } from '../../../../adapters/out/drizzle/persistence/user/user.persistence';
 import { DrizzleConnection } from '../../../orm/drizzle/connection';
 import { PinoElasticsearchLoggerAdapter } from '../../../../adapters/out/logger/logger.adapter';
-import { LoggerPort } from '../../../../ports/out/logger/logger.interface';
+import { HashAdapter } from '../../../../adapters/out/hasher/hash.adapater';
 import { UserRoutes } from 'src/routes/user/user.routes';
 
 @Module({
@@ -24,6 +24,12 @@ import { UserRoutes } from 'src/routes/user/user.routes';
       },
     },
     {
+      provide: HashAdapter,
+      useFactory: () => {
+        return new HashAdapter(12);
+      },
+    },
+    {
       provide: PersistenceUser,
       useFactory: (connection: DrizzleConnection) =>
         new PersistenceUser(connection),
@@ -38,8 +44,9 @@ import { UserRoutes } from 'src/routes/user/user.routes';
       useFactory: (
         saveUserUseCase: SaveUserUseCase,
         persistenceUser: PersistenceUser,
-      ) => new SaveUserService(saveUserUseCase, persistenceUser),
-      inject: [SaveUserUseCase, PersistenceUser],
+        hashAdapter: HashAdapter,
+      ) => new SaveUserService(saveUserUseCase, persistenceUser, hashAdapter),
+      inject: [SaveUserUseCase, PersistenceUser, HashAdapter],
     },
 
     {

@@ -1,7 +1,7 @@
-import { User } from "../../../domain/user/entities/user";
-import { Either } from "../../../shared/either";
-import { Connection } from "../connection.contract";
-import { Repository } from "../repository.interface";
+import { User } from "../../../../domain/user/entities/user";
+import { Either } from "../../../../shared/either";
+import { Connection } from "../../connection.contract";
+import { Repository } from "../../repository.interface";
 
 export interface SearchUsersParams {
   page?: number;

@@ -1,7 +1,7 @@
-import { Book } from "../../../domain/book/entities/book";
-import { Either } from "../../../shared/either";
-import { Connection } from "../connection.contract";
-import { Repository } from "../repository.interface";
+import { Book } from "../../../../domain/book/entities/book";
+import { Either } from "../../../../shared/either";
+import { Connection } from "../../connection.contract";
+import { Repository } from "../../repository.interface";
 
 export interface SearchBooksParams {
   page?: number;

@@ -3,7 +3,7 @@ import  {books} from '../../../../../infra/orm/drizzle/schemas/book'
 import { DrizzleConnection } from "../../../../../infra/orm/drizzle/connection";
 import { and, desc, like } from "drizzle-orm";
 import { Either, left, right } from "../../../../../shared/either";
-import { SearchUsersParams, UserRepositoryPort } from "../../../../../ports/out/user/user-repository.port";
+import { SearchUsersParams, UserRepositoryPort } from "../../../../../ports/out/persistence/user/user-repository.port";
 import { User } from "../../../../../domain/user/entities/user";
 import { users } from "../../../../../infra/orm/drizzle/schemas/user";
 
@@ -28,6 +28,7 @@ export class PersistenceUser extends UserRepositoryPort {
 
       return right(entity);
     }catch(e) {
+      console.log(e);
       return left(new Error('erro ao persistir usuário'));
     }
   }

@@ -1,5 +1,6 @@
 import { FindAllBooksService } from "../../../../../application/services/book/find-all-books.service";
-import { SearchBooksParams } from "../../../../../ports/out/book/book-repository.port";
+import { SearchBooksParams } from "../../../../../ports/out/persistence/book/book-repository.port";
+
 
 export class FindAllBooksController {
   constructor(public readonly findAllBooksService: FindAllBooksService){}

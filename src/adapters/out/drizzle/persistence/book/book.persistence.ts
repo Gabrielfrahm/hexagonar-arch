@@ -1,10 +1,11 @@
 import { Book } from "../../../../../domain/book/entities/book";
-import { BookRepositoryPort, SearchBooksParams } from "../../../../../ports/out/book/book-repository.port";
+
 import  {books} from '../../../../../infra/orm/drizzle/schemas/book'
 import { DrizzleConnection } from "../../../../../infra/orm/drizzle/connection";
 import { BookMapper } from "./book.mapper";
 import { and, desc, like } from "drizzle-orm";
 import { Either, right } from "../../../../../shared/either";
+import { BookRepositoryPort, SearchBooksParams } from "../../../../../ports/out/persistence/book/book-repository.port";
 
 
 export class PersistenceBook extends BookRepositoryPort {

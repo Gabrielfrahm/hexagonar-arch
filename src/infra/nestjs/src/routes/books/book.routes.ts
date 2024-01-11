@@ -1,14 +1,7 @@
-import {
-  Body,
-  Controller,
-  Get,
-  HttpException,
-  Post,
-  Query,
-} from '@nestjs/common';
+import { Body, Controller, Get, Post, Query } from '@nestjs/common';
 import { SaveBookController } from '../../../../../adapters/in/http/controllers/book/save-book.controller';
 import { FindAllBooksController } from '../../../../../adapters/in/http/controllers/book/find-all-books.controller';
-import { SearchBooksParams } from '../../../../../ports/out/book/book-repository.port';
+import { SearchBooksParams } from '../../../../../ports/out/persistence/book/book-repository.port';
 
 @Controller('books')
 export class BookRoutes {

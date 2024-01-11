@@ -1,7 +1,8 @@
 import { Book } from "@prisma/client";
-import { BookRepositoryPort, SearchBooksParams } from "../../../ports/out/book/book-repository.port";
+
 import { LoggerPort } from "../../../ports/out/logger/logger.interface";
 import { Either } from "../../../shared/either";
+import { BookRepositoryPort, SearchBooksParams } from "../../../ports/out/persistence/book/book-repository.port";
 
 export class FindAllBooksService {
   constructor(
