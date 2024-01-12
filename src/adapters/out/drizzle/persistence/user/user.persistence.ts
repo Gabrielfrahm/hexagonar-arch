@@ -1,11 +1,12 @@
 import { Book } from "../../../../../domain/book/entities/book";
 import  {books} from '../../../../../infra/orm/drizzle/schemas/book'
 import { DrizzleConnection } from "../../../../../infra/orm/drizzle/connection";
-import { and, desc, like } from "drizzle-orm";
+import { and, desc, eq, like } from "drizzle-orm";
 import { Either, left, right } from "../../../../../shared/either";
 import { SearchUsersParams, UserRepositoryPort } from "../../../../../ports/out/persistence/user/user-repository.port";
 import { User } from "../../../../../domain/user/entities/user";
 import { users } from "../../../../../infra/orm/drizzle/schemas/user";
+import { UserMapper } from "./user.mapper";
 
 
 export class PersistenceUser extends UserRepositoryPort {
@@ -37,23 +38,15 @@ export class PersistenceUser extends UserRepositoryPort {
     throw new Error("Method not implemented.");
   }
 
-  // async findAll(params?: SearchBooksParams): Promise<Either<any,Book[] | []>> {
-  //   const offset = ((params?.page ||  1) - 1)  * (params?.per_page ?? 10);
-  //   const limit = params?.per_page || 10;
-  //   const booksModel = await this.drizzleConnection.db.select()
-  //     .from(books)
-  //     .where(
-  //       and(
-  //         params?.name && like(books.name, `%${params.name}%`),
-  //         params?.author &&  like(books.author, `%${params.author}%`)
-  //       )
-  //     )
-  //     .limit(limit)
-  //     .offset(offset)
-  //     .orderBy(desc(books.created_at)).prepare().execute();
+  async findByEmail(email: string): Promise<Either<any, User>> {
+    const userModel = await this.drizzleConnection.db
+      .select().from(users).where(eq(users.email, email));
 
-  //   if(booksModel){
-  //     return right(booksModel.map((bookModel) => BookMapper.toEntity(bookModel)));
-  //   }
-  // }
+    if(userModel.length <= 0) {
+      return left(new Error('user não existe'))
+    }
+
+    return right(UserMapper.toEntity(userModel[0]));
+  }
+
 }

@@ -7,6 +7,8 @@ import { DrizzleConnection } from '../../../orm/drizzle/connection';
 import { PinoElasticsearchLoggerAdapter } from '../../../../adapters/out/logger/logger.adapter';
 import { HashAdapter } from '../../../../adapters/out/hasher/hash.adapater';
 import { UserRoutes } from 'src/routes/user/user.routes';
+import { LoginUserService } from '../../../../application/services/user/login/login-user.service';
+import { LoginUserController } from '../../../../adapters/in/http/controllers/user/login/login-user.controller';
 
 @Module({
   controllers: [UserRoutes],
@@ -48,12 +50,26 @@ import { UserRoutes } from 'src/routes/user/user.routes';
       ) => new SaveUserService(saveUserUseCase, persistenceUser, hashAdapter),
       inject: [SaveUserUseCase, PersistenceUser, HashAdapter],
     },
+    {
+      provide: LoginUserService,
+      useFactory: (
+        persistenceUser: PersistenceUser,
+        hashAdapter: HashAdapter,
+      ) => new LoginUserService(persistenceUser, hashAdapter),
+      inject: [PersistenceUser, HashAdapter],
+    },
 
     {
       provide: SaveUserController,
       useFactory: (saveUserService: SaveUserService): SaveUserController =>
         new SaveUserController(saveUserService),
       inject: [SaveUserService],
+    },
+    {
+      provide: LoginUserController,
+      useFactory: (loginUserService: LoginUserService): LoginUserController =>
+        new LoginUserController(loginUserService),
+      inject: [LoginUserService],
     },
   ],
 })
