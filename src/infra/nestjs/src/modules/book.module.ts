@@ -10,6 +10,8 @@ import { FindAllBooksService } from '../../../../application/services/book/find-
 import { FindAllBooksController } from '../../../../adapters/in/http/controllers/book/find-all-books.controller';
 import { PinoElasticsearchLoggerAdapter } from '../../../../adapters/out/logger/logger.adapter';
 import { LoggerPort } from '../../../../ports/out/logger/logger.interface';
+import { AuthenticationMiddleware } from '../middlewares/authentication.middleware';
+import { JwtAdapter } from '../../../../adapters/out/jwt/token.adapter';
 
 @Module({
   imports: [ConfigModule.forRoot({ isGlobal: true })],
@@ -32,6 +34,18 @@ import { LoggerPort } from '../../../../ports/out/logger/logger.interface';
       useFactory: (connection: DrizzleConnection) =>
         new PersistenceBook(connection),
       inject: ['drizzleConnection'],
+    },
+    {
+      provide: JwtAdapter,
+      useFactory: () => {
+        return new JwtAdapter();
+      },
+    },
+    {
+      provide: AuthenticationMiddleware,
+      useFactory: (tokenAdapter: JwtAdapter): AuthenticationMiddleware =>
+        new AuthenticationMiddleware(tokenAdapter),
+      inject: [JwtAdapter],
     },
     {
       provide: SaveBookUseCase,

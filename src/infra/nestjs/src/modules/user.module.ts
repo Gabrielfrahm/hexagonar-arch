@@ -6,6 +6,8 @@ import { PersistenceUser } from '../../../../adapters/out/drizzle/persistence/us
 import { DrizzleConnection } from '../../../orm/drizzle/connection';
 import { PinoElasticsearchLoggerAdapter } from '../../../../adapters/out/logger/logger.adapter';
 import { HashAdapter } from '../../../../adapters/out/hasher/hash.adapater';
+import { JwtAdapter } from '../../../../adapters/out/jwt/token.adapter';
+
 import { UserRoutes } from 'src/routes/user/user.routes';
 import { LoginUserService } from '../../../../application/services/user/login/login-user.service';
 import { LoginUserController } from '../../../../adapters/in/http/controllers/user/login/login-user.controller';
@@ -32,6 +34,12 @@ import { LoginUserController } from '../../../../adapters/in/http/controllers/us
       },
     },
     {
+      provide: 'tokenAdapter',
+      useFactory: () => {
+        return new JwtAdapter();
+      },
+    },
+    {
       provide: PersistenceUser,
       useFactory: (connection: DrizzleConnection) =>
         new PersistenceUser(connection),
@@ -55,10 +63,10 @@ import { LoginUserController } from '../../../../adapters/in/http/controllers/us
       useFactory: (
         persistenceUser: PersistenceUser,
         hashAdapter: HashAdapter,
-      ) => new LoginUserService(persistenceUser, hashAdapter),
-      inject: [PersistenceUser, HashAdapter],
+        tokenAdapter: JwtAdapter,
+      ) => new LoginUserService(persistenceUser, hashAdapter, tokenAdapter),
+      inject: [PersistenceUser, HashAdapter, 'tokenAdapter'],
     },
-
     {
       provide: SaveUserController,
       useFactory: (saveUserService: SaveUserService): SaveUserController =>
